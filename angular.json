@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "irantebzaeem": {
+    "mikhak": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/irantebzaeem",
+            "outputPath": "dist/mikhak",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -69,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "irantebzaeem:build:production"
+              "buildTarget": "mikhak:build:production"
             },
             "development": {
-              "buildTarget": "irantebzaeem:build:development"
+              "buildTarget": "mikhak:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -103,5 +103,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "98b6f5e2-7be5-4995-9c4c-d044a929f563"
   }
 }
