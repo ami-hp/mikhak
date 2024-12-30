@@ -1,0 +1,66 @@
+<div class="flex items-center justify-center h-screen bg-top bg-fixed bg-no-repeat"
+     [ngStyle]="{'background-image' : backgroundUrl}" >
+  <div class="bg-white p-5 bg-opacity-60 border-white border rounded-[40px] 4px 15px hsla(0,0%,100%,.72) shadow-[4px_4px_15px_hsla(0,0%,100%,.72)] w-11/12 max-w-[445px]">
+    <div class="flex justify-center mb-6">
+      <img class="w-1/2" src="/images/logo/yekparche.webp" alt="Mikhak logo">
+    </div>
+    <div>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+        <fieldset class="grid grid-cols-1 gap-y-5">
+
+          <auth-input
+            [control]="getFormControl('email')"
+            type="text"
+            placeholder="نام کاربری (email)"
+            [dynamicStyle]="{'direction': 'ltr'}"
+          />
+          <auth-input
+            [control]="getFormControl('password')"
+            type="password"
+            placeholder="کلمه عبور (ترکیبی از حرف و عدد)"
+            [dynamicStyle]="{'direction': 'ltr'}"
+          />
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 md:gap-x-2">
+            <div>
+              <auth-input
+                dynamicClass="w-full"
+                [control]="getFormControl('captchaInput')"
+                type="text"
+                placeholder="کد امنیتی"
+                [required]="true"
+              />
+            </div>
+
+            <div class="flex items-center gap-x-2 justify-center">
+              <img [src]="captchaImage" alt="CAPTCHA"/>
+              <button (click)="generateNewCaptcha()">
+                <img class="max-w-5" ngSrc="/images/icons/reload.webp" alt="reload captcha" height="32" width="32">
+              </button>
+            </div>
+
+          </div>
+
+        </fieldset>
+
+        <div class="grid grid-cols-2 gap-x-3 mt-10">
+          <button class="bg-[#bde0ff] rounded-full shadow-[2px_2px_7px_#666] p-3 font-bold text-gray-700 text-xs" type="submit">ورود به سامانه</button>
+          <button class="bg-[#bde0ff] rounded-full shadow-[2px_2px_7px_#666] p-3 font-bold text-gray-700 text-xs" type="button">ورود با پست الکترونیک</button>
+        </div>
+
+        <div class="flex justify-center">
+          <button class="font-bold text-[#31345d] text-sm" type="button">کلمه عبور خود را فراموش کرده ام!</button>
+        </div>
+
+        <div class="flex justify-center">
+          <span class="mt-2 text-[#31345d] text-xs" >ویرایش : 1.18.0</span>
+        </div>
+
+      </form>
+
+
+
+    </div>
+  </div>
+</div>

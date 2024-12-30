@@ -1,0 +1,32 @@
+<div class="input-group">
+  @if (label) {
+    <label>{{ label }}</label>
+  }
+  <input
+    class="w-full h-[30px] md:h-[40px] rounded-3xl py-0 px-4 text-white border-none shadow-none outline-none
+     bg-[#31345d] text-center mt-0 leading-6 font-bold text-sm md:text-base font-sans"
+    [ngClass]="dynamicClass"
+    [ngStyle]="dynamicStyle"
+    [formControl]="control"
+    [attr.type]="type"
+    [attr.placeholder]="placeholder"
+    [attr.required]="required"
+    [attr.disabled]="disabled"
+    [attr.autocomplete]="autocomplete"/>
+</div>
+
+<!--Alert-->
+@if (control.invalid && (control.dirty && control.touched)) {
+  <ul class="flex flex-col gap-2 border border-red-500 bg-red-300 rounded-xl text-red-600 p-3 list-disc list-inside mt-1 text-sm">
+    @for (error of errors; track $index) {
+      @if (getType(error.message) === 'string') {
+        <li class="">{{ error.message }}</li>
+      } @else {
+        @for (er of toIterable(error.message); track $index) {
+          <li class="">{{ er }}</li>
+        }
+      }
+    }
+  </ul>
+}
+
