@@ -21,20 +21,9 @@ export class AuthInputComponent implements OnInit {
   @Input() dynamicStyle: object = {};
 
   ngOnInit(): void {
-    // this.test_onChange();
   }
 
-  test_onChange(): void {
-    this.control?.valueChanges.subscribe((value) => {
-      for(let er of this.errors){
-        if(typeof er.message === 'object'){
-          console.log('obj')
-        } else {
-          console.log(er.message)
-        }
-      }
-    });
-  }
+
 
   getType(t : any) {
     return typeof t;
@@ -47,6 +36,7 @@ export class AuthInputComponent implements OnInit {
     return [];
   }
   toIterable(obj : object) {
+    console.log(obj)
     return Object.values(obj).map((o) => {
       return o;
     });

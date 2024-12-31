@@ -5,28 +5,54 @@
       <img class="w-1/2" src="/images/logo/yekparche.webp" alt="Mikhak logo">
     </div>
     <div>
+
+
+
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
         <fieldset class="grid grid-cols-1 gap-y-5">
 
+          <div>
+            <label>
+              <input type="radio" [formControl]="otpToggle" [value]="false">
+              کلمه عبور ثابت
+            </label>
+            <label>
+              <input type="radio" [formControl]="otpToggle" [value]="true">
+              رمز یکبار مصرف
+            </label>
+          </div>
+
           <auth-input
-            [control]="getFormControl('email')"
+            [control]="email"
             type="text"
             placeholder="نام کاربری (email)"
             [dynamicStyle]="{'direction': 'ltr'}"
           />
-          <auth-input
-            [control]="getFormControl('password')"
-            type="password"
-            placeholder="کلمه عبور (ترکیبی از حرف و عدد)"
-            [dynamicStyle]="{'direction': 'ltr'}"
-          />
+
+          @if(otpToggle.value){
+            <auth-input
+              [control]="otp"
+              type="number"
+              placeholder="رمز یکبار مصرف"
+              [dynamicStyle]="{'direction': 'ltr'}"
+            />
+          } @else {
+            <auth-input
+              [control]="password"
+              type="password"
+              placeholder="کلمه عبور (ترکیبی از حرف و عدد)"
+              [dynamicStyle]="{'direction': 'ltr'}"
+            />
+          }
+
+
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 md:gap-x-2">
             <div>
               <auth-input
                 dynamicClass="w-full"
-                [control]="getFormControl('captchaInput')"
+                [control]="captchaInput"
                 type="text"
                 placeholder="کد امنیتی"
                 [required]="true"

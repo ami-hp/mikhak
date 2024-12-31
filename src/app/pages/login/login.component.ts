@@ -1,9 +1,9 @@
 import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CaptchaService} from '../../services/captcha.service';
-import {ValidatorService} from '../../services/validator.service';
 import {NgOptimizedImage, NgStyle} from '@angular/common';
 import {AuthInputComponent} from '../../components/form/auth-input/auth-input.component';
+import {ValidatorService} from '../../services/validator.service';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +12,7 @@ import {AuthInputComponent} from '../../components/form/auth-input/auth-input.co
     NgOptimizedImage,
     AuthInputComponent,
     NgStyle,
+    FormsModule,
   ],
   templateUrl: './login.component.html',
   standalone: true,
@@ -19,10 +20,27 @@ import {AuthInputComponent} from '../../components/form/auth-input/auth-input.co
 })
 
 export class LoginComponent implements OnInit {
-  loginForm!: FormGroup;
   captchaText!: string;
   captchaImage!: string | null;
   backgroundUrl: string = '';
+
+  emailValidators = [ValidatorService.required(), ValidatorService.email()];
+  captchaValidators = [ValidatorService.required(), ValidatorService.minLength(6), ValidatorService.maxLength(6)];
+
+  otpToggle = new FormControl(false , ValidatorService.required());
+
+  email = new FormControl('', this.emailValidators);
+  captchaInput = new FormControl('', this.captchaValidators);
+  otp = new FormControl('' , [ValidatorService.password()]);
+  password = new FormControl('' , [ValidatorService.password()]);
+
+  loginForm = new FormGroup({
+    otpToggle: this.otpToggle,
+    email: this.email,
+    captchaInput: this.password,
+    password: this.password,
+    otp: this.otp,
+  });
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,34 +51,16 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.generateNewCaptcha();
-    this.loginForm = this.formBuilder.group({
-      email: new FormControl('', [ValidatorService.required(), ValidatorService.email()]),
-      password: new FormControl('', [ValidatorService.required(), ValidatorService.minLength(8), ValidatorService.maxLength(20), ValidatorService.password()]),
-      captchaInput: new FormControl('', [ValidatorService.required(), ValidatorService.minLength(6), ValidatorService.maxLength(6), ValidatorService.string()]),
-    });
     this.setBackgroundImage();
   }
-
-  get email() {
-    return this.loginForm.get('email');
-  }
-
-  get password() {
-    return this.loginForm.get('password');
-  }
-
-  get captchaInput() {
-    return this.loginForm.get('captchaInput');
-  }
-
   generateNewCaptcha(): void {
     this.captchaText = this.captchaService.generateCaptcha();
     this.captchaImage = this.captchaService.generateCaptchaImage(this.captchaText);
   }
 
-
   onSubmit(): void {
     if (this.loginForm.valid) {
+      console.log(this.loginForm.value);
       const userInput = this.loginForm.value.captchaInput;
       if (userInput === this.captchaText) {
         alert('Login successful!');
@@ -69,10 +69,6 @@ export class LoginComponent implements OnInit {
         this.generateNewCaptcha();
       }
     }
-  }
-
-  getFormControl(controlName: string): FormControl {
-    return this.loginForm.get(controlName) as FormControl;
   }
 
   setBackgroundImage(): void {
