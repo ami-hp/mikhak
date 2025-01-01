@@ -14,11 +14,13 @@ export class AuthInputComponent implements OnInit {
   @Input() control!: FormControl;
   @Input() type: string = 'text';
   @Input() placeholder: string = '';
+  @Input() name: string = '';
   @Input() required: boolean = false;
   @Input() disabled: boolean = false;
   @Input() autocomplete: string = "off";
   @Input() dynamicClass: string = '';
   @Input() dynamicStyle: object = {};
+  @Input() isFormSubmitted: boolean = false;
 
   ngOnInit(): void {
   }
@@ -30,15 +32,17 @@ export class AuthInputComponent implements OnInit {
   }
 
   get errors(){
-    if (this.control && this.control.errors && this.control.dirty) {
-      return this.toIterable(this.control.errors);
+    if (this.name && this.control.invalid && (this.control.parent?.errors?.[this.name]) && (this.control.dirty || this.control.touched || this.isFormSubmitted)) {
+      return this.toIterable(this.control.errors ?? {});
     }
     return [];
   }
   toIterable(obj : object) {
-    console.log(obj)
     return Object.values(obj).map((o) => {
       return o;
     });
+  }
+
+  ngDoCheck(){
   }
 }

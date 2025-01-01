@@ -23,27 +23,32 @@ export class LoginComponent implements OnInit {
   captchaText!: string;
   captchaImage!: string | null;
   backgroundUrl: string = '';
+  isFormSubmitted: boolean = false;
+  db: any;
 
-  emailValidators = [ValidatorService.required(), ValidatorService.email()];
-  captchaValidators = [ValidatorService.required(), ValidatorService.minLength(6), ValidatorService.maxLength(6)];
+  fields: string[] = [
+    'otpToggle',
+    'email',
+    'captchaInput',
+    'password',
+    'otp',
+  ];
 
-  otpToggle = new FormControl(false , ValidatorService.required());
+  otpToggle: FormControl = new FormControl(false);
+  email: FormControl = new FormControl(null, [ValidatorService.required(), ValidatorService.email()]);
+  captchaInput: FormControl = new FormControl(null, [ValidatorService.required(), ValidatorService.minLength(6), ValidatorService.maxLength(6)]);
+  otp: FormControl = new FormControl(null, [ValidatorService.requiredWithoutAll(['password'])]);
+  password: FormControl = new FormControl(null, [ValidatorService.requiredWithoutAll(['otp'])]);
 
-  email = new FormControl('', this.emailValidators);
-  captchaInput = new FormControl('', this.captchaValidators);
-  otp = new FormControl('' , [ValidatorService.password()]);
-  password = new FormControl('' , [ValidatorService.password()]);
-
-  loginForm = new FormGroup({
+  loginForm: FormGroup = new FormGroup({
     otpToggle: this.otpToggle,
     email: this.email,
-    captchaInput: this.password,
+    captchaInput: this.captchaInput,
     password: this.password,
     otp: this.otp,
   });
 
   constructor(
-    private formBuilder: FormBuilder,
     private captchaService: CaptchaService,
     private cdr: ChangeDetectorRef
   ) {
@@ -52,23 +57,75 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.generateNewCaptcha();
     this.setBackgroundImage();
+    // this.listenOnFormChange();
+
   }
-  generateNewCaptcha(): void {
-    this.captchaText = this.captchaService.generateCaptcha();
-    this.captchaImage = this.captchaService.generateCaptchaImage(this.captchaText);
+
+  private listenOnFormChange() {
+    this.loginForm.get('otpToggle')?.valueChanges.subscribe((value) => {
+      if (value) {
+        this.password.setValue(null)
+      } else {
+        this.otp.setValue(null);
+      }
+    });
   }
 
   onSubmit(): void {
+    this.isFormSubmitted = true;
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
       const userInput = this.loginForm.value.captchaInput;
       if (userInput === this.captchaText) {
-        alert('Login successful!');
+        console.log('SUBMIT : CAPTCHA IS CORRECT')
+        this.fetchData()
+
       } else {
         alert('CAPTCHA validation failed! Please try again.');
         this.generateNewCaptcha();
       }
     }
+  }
+
+  fetchData() {
+    return fetch('/db.json')
+      .then(response => response.json())
+      .then(data => {
+        this.db = data;
+        let user = this.db.users[0];
+        let otp = this.db.otp[0];
+        if(!this.otpToggle && this.loginForm.get('email')?.value == user.email && this.loginForm.get('password')?.value == user.password) {
+          console.log('SUBMIT : PASSWORD IS CORRECT')
+        }else if(this.otpToggle && this.loginForm.get('email')?.value == user.email && this.loginForm.get('otp')?.value == otp.code){
+          console.log('SUBMIT : PASSWORD IS CORRECT')
+        } else {
+          console.log('SUBMIT : CREDENTIALS INCORRECT')
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }
+
+  ngDoCheck(): void {
+    if (this.loginForm.invalid) {
+      this.setErrors();
+      console.log("Form is invalid:", this.loginForm.errors , this.loginForm.value);
+    } else {
+      console.log("FORM VALID");
+    }
+  }
+
+  setErrors() {
+    let errors = this.loginForm.errors || {};
+    for (let field of this.fields) {
+      errors[field] = this.loginForm.get(field)?.errors;
+    }
+    this.loginForm.setErrors(errors);
+  }
+
+  generateNewCaptcha(): void {
+    this.captchaText = this.captchaService.generateCaptcha();
+    this.captchaImage = this.captchaService.generateCaptchaImage(this.captchaText);
   }
 
   setBackgroundImage(): void {

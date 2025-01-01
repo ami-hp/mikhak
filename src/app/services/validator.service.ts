@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
+import {AbstractControl, FormArray, FormGroup, ValidationErrors, ValidatorFn} from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +54,49 @@ export class ValidatorService {
 
   static required(msg: string = "This field is required"): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
+      return control.value ? null : {required: {value: true, message: msg}};
+    };
+  }
+
+  static requiredIf(condition: boolean, msg: string = "This field is required"): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!condition) {
+        return null;
+      }
+      return control.value ? null : {required: {value: true, message: msg}};
+    };
+  }
+
+  static requiredIfAccepted(anotherField: string, msg: string = "This field is required"): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+
+      const acceptedValue : (string | number | boolean)[] = ["yes" , "no" , 1 , "1" , true, "true"];
+      const formGroup : FormGroup | FormArray | null = control.parent;
+      const anotherFieldValue = formGroup?.get(anotherField)?.value;
+
+      if(acceptedValue.includes(anotherFieldValue)){
+          return null;
+      }
+
+      return control.value ? null : {required: {value: true, message: msg}};
+    };
+  }
+
+  static requiredWithoutAll(anotherFields: string[], msg: string = "This field is required without some other fields"): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+
+
+      const formGroup : FormGroup | FormArray | null = control.parent;
+
+      anotherFields = anotherFields.map((anotherField : string) => {
+        return formGroup?.get(anotherField)?.value ?? null;
+      })
+
+      function hasValue(value : any): boolean {  return value !== null && value !== undefined && value !== '';}
+      if(!anotherFields.some(hasValue)){
+          return null;
+      }
+
       return control.value ? null : {required: {value: true, message: msg}};
     };
   }
@@ -126,6 +169,28 @@ export class ValidatorService {
       }
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return emailPattern.test(value) ? null : {email: {value: control.value, message: msg}};
+    };
+  }
+
+  static numeric(msg: string = "Value must be a number"): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value) {
+        return null;
+      }
+      return !isNaN(control.value) ? null : {numeric: {value: control.value, message: msg}};
+    };
+  }
+
+  static conditionalValidator(otherControlName: string, validator: ValidatorFn): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const formGroup : FormGroup | FormArray | null = control.parent;
+      if (formGroup) {
+        const otherControl = formGroup.get(otherControlName);
+        if (otherControl && !otherControl.value) {
+          return validator(control);
+        }
+      }
+      return null;
     };
   }
 }

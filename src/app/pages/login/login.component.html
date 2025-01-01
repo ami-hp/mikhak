@@ -12,7 +12,7 @@
 
         <fieldset class="grid grid-cols-1 gap-y-5">
 
-          <div>
+          <div class="flex justify-around">
             <label>
               <input type="radio" [formControl]="otpToggle" [value]="false">
               کلمه عبور ثابت
@@ -25,6 +25,8 @@
 
           <auth-input
             [control]="email"
+            name="email"
+            [isFormSubmitted]="isFormSubmitted"
             type="text"
             placeholder="نام کاربری (email)"
             [dynamicStyle]="{'direction': 'ltr'}"
@@ -33,6 +35,8 @@
           @if(otpToggle.value){
             <auth-input
               [control]="otp"
+              name="otp"
+              [isFormSubmitted]="isFormSubmitted"
               type="number"
               placeholder="رمز یکبار مصرف"
               [dynamicStyle]="{'direction': 'ltr'}"
@@ -40,6 +44,8 @@
           } @else {
             <auth-input
               [control]="password"
+              name="password"
+              [isFormSubmitted]="isFormSubmitted"
               type="password"
               placeholder="کلمه عبور (ترکیبی از حرف و عدد)"
               [dynamicStyle]="{'direction': 'ltr'}"
@@ -53,6 +59,8 @@
               <auth-input
                 dynamicClass="w-full"
                 [control]="captchaInput"
+                name="captchaInput"
+                [isFormSubmitted]="isFormSubmitted"
                 type="text"
                 placeholder="کد امنیتی"
                 [required]="true"
@@ -61,7 +69,7 @@
 
             <div class="flex items-center gap-x-2 justify-center">
               <img [src]="captchaImage" alt="CAPTCHA"/>
-              <button (click)="generateNewCaptcha()">
+              <button (click)="generateNewCaptcha()" type="button">
                 <img class="max-w-5" ngSrc="/images/icons/reload.webp" alt="reload captcha" height="32" width="32">
               </button>
             </div>
