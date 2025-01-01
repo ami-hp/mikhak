@@ -1,11 +1,12 @@
 import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CaptchaService} from '../../services/captcha.service';
 import {NgOptimizedImage, NgStyle} from '@angular/common';
 import {AuthInputComponent} from '../../components/form/auth-input/auth-input.component';
 import {ValidatorService} from '../../services/validator.service';
 import {DbService} from '../../services/db.service';
-import {catchError, Observable, ObservableInput, throwError} from 'rxjs';
+import {timer} from 'rxjs';
+import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -27,6 +28,23 @@ export class LoginComponent implements OnInit {
   backgroundUrl: string = '';
   isFormSubmitted: boolean = false;
   db: any;
+
+  timeLeft: number = 120;
+  interval: any;
+
+  startTimer() {
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+    this.timeLeft = 120;
+    this.interval = setInterval(() => {
+      if (this.timeLeft > 0) {
+        this.timeLeft--;
+      } else {
+        clearInterval(this.interval);
+      }
+    }, 1000);
+  }
 
   fields: string[] = [
     'otpToggle',
@@ -113,12 +131,20 @@ export class LoginComponent implements OnInit {
       this.db = data;
       this.code = this.db.otp[0].code;
       alert(this.db.users[0].email + " : " + this.code);
+
+      this.startTimer();
     });
   }
 
   generateNewCaptcha(): void {
     this.captchaText = this.captchaService.generateCaptcha();
     this.captchaImage = this.captchaService.generateCaptchaImage(this.captchaText);
+  }
+
+  convertSecondsToMinutesSeconds(seconds: number): string {
+    const minutes: number = Math.floor(seconds / 60);
+    const remainingSeconds: number = seconds % 60;
+    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   }
 
   private setErrors() {
@@ -138,7 +164,7 @@ export class LoginComponent implements OnInit {
 
   private listenOnFormChange() {
     this.loginForm.get('otpToggle')?.valueChanges.subscribe({
-      next: (value)=> {
+      next: (value) => {
         if (value) {
           this.password.setValue(null)
         } else {

@@ -9,7 +9,12 @@
 
 
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-
+        @if(timeLeft > 0 && timeLeft < 120){
+          <div  class="mb-3 text-center">
+            زمان باقی مانده :
+            <span>{{ convertSecondsToMinutesSeconds(timeLeft) }}</span>
+          </div>
+        }
         <fieldset class="grid grid-cols-1 gap-y-5">
 
           <div class="flex justify-around">
@@ -33,16 +38,19 @@
           />
 
           @if(otpToggle.value){
-            <div class="grid grid-cols-1 md:grid-cols-2">
-              <auth-input
-                [control]="otp"
-                name="otp"
-                [isFormSubmitted]="isFormSubmitted"
-                type="number"
-                placeholder="رمز یکبار مصرف"
-                [dynamicStyle]="{'direction': 'ltr'}"
-              />
-              <button class="bg-[#bde0ff] rounded-full shadow-[2px_2px_7px_#666] p-3 font-bold text-gray-700 text-xs" type="button" (click)="getCode()">دریافت کد</button>
+            <div class="grid grid-cols-3">
+              <div class="col-span-2">
+                <auth-input
+                  [control]="otp"
+                  name="otp"
+                  [isFormSubmitted]="isFormSubmitted"
+                  type="number"
+                  placeholder="رمز یکبار مصرف"
+                  [dynamicStyle]="{'direction': 'ltr'}"
+                  dynamicClass="col-span-2"
+                />
+              </div>
+              <button class="bg-[#bde0ff] rounded-full shadow-[2px_2px_7px_#666] p-3 font-bold text-gray-700 text-xs col-span-1" type="button" (click)="getCode()">دریافت کد</button>
             </div>
 
           } @else {
