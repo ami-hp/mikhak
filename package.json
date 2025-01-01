@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:gh": "ng build --configuration production --output-path docs --base-href /mikhak",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:mikhak": "node dist/mikhak/server/server.mjs"
