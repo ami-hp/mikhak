@@ -7,13 +7,18 @@ export default {
   routes: [
   {
     "renderMode": 2,
+    "redirectTo": "/mikhak/login",
+    "route": "/mikhak"
+  },
+  {
+    "renderMode": 2,
     "route": "/mikhak/login"
   }
 ],
   assets: {
-    'index.csr.html': {size: 2738, hash: 'f3aaaa3aa1ad50e37fea0c43f7bcfed11b1b28838a797605ae4a40d44212a7e5', text: () => import('./assets-chunks/index_csr_html.mjs').then(m => m.default)},
-    'index.server.html': {size: 1096, hash: '0090cd3da7ade93ab2ea0c8b940f158a99d8b1855fd89565fd1a27505f30aa41', text: () => import('./assets-chunks/index_server_html.mjs').then(m => m.default)},
-    'login/index.html': {size: 12340, hash: '7c9a63860d4f443f83f36176617a73f463cda1f288d002e7d354755898d15f5c', text: () => import('./assets-chunks/login_index_html.mjs').then(m => m.default)},
-    'styles-TN77NH5T.css': {size: 11028, hash: '4g9LEg9LQzk', text: () => import('./assets-chunks/styles-TN77NH5T_css.mjs').then(m => m.default)}
+    'index.csr.html': {size: 2738, hash: '915ca6e687d51ec8e2a9e5adb0fa985938a517402faa08ea14fef348455216a9', text: () => import('./assets-chunks/index_csr_html.mjs').then(m => m.default)},
+    'index.server.html': {size: 1096, hash: 'ead3f65116ba231491f01153c80f89da2e1b58604a318c75c26898024c77f7e5', text: () => import('./assets-chunks/index_server_html.mjs').then(m => m.default)},
+    'login/index.html': {size: 12622, hash: '29303e6c33dd8147e67d1ca79b4ef2c23fc458ea6235fe788b7cc08cd0ad4de2', text: () => import('./assets-chunks/login_index_html.mjs').then(m => m.default)},
+    'styles-QHUSWRAP.css': {size: 11194, hash: '9kjFpYJdzmE', text: () => import('./assets-chunks/styles-QHUSWRAP_css.mjs').then(m => m.default)}
   },
 };
