@@ -33,14 +33,18 @@
           />
 
           @if(otpToggle.value){
-            <auth-input
-              [control]="otp"
-              name="otp"
-              [isFormSubmitted]="isFormSubmitted"
-              type="number"
-              placeholder="رمز یکبار مصرف"
-              [dynamicStyle]="{'direction': 'ltr'}"
-            />
+            <div class="grid grid-cols-1 md:grid-cols-2">
+              <auth-input
+                [control]="otp"
+                name="otp"
+                [isFormSubmitted]="isFormSubmitted"
+                type="number"
+                placeholder="رمز یکبار مصرف"
+                [dynamicStyle]="{'direction': 'ltr'}"
+              />
+              <button class="bg-[#bde0ff] rounded-full shadow-[2px_2px_7px_#666] p-3 font-bold text-gray-700 text-xs" type="button" (click)="getCode()">دریافت کد</button>
+            </div>
+
           } @else {
             <auth-input
               [control]="password"
@@ -51,8 +55,6 @@
               [dynamicStyle]="{'direction': 'ltr'}"
             />
           }
-
-
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 md:gap-x-2">
             <div>

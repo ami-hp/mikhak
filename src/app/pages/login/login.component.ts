@@ -4,6 +4,8 @@ import {CaptchaService} from '../../services/captcha.service';
 import {NgOptimizedImage, NgStyle} from '@angular/common';
 import {AuthInputComponent} from '../../components/form/auth-input/auth-input.component';
 import {ValidatorService} from '../../services/validator.service';
+import {DbService} from '../../services/db.service';
+import {catchError, Observable, ObservableInput, throwError} from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -47,28 +49,26 @@ export class LoginComponent implements OnInit {
     password: this.password,
     otp: this.otp,
   });
+  private code: any;
 
   constructor(
     private captchaService: CaptchaService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private dbService: DbService
   ) {
   }
 
   ngOnInit(): void {
     this.generateNewCaptcha();
     this.setBackgroundImage();
-    // this.listenOnFormChange();
-
   }
 
-  private listenOnFormChange() {
-    this.loginForm.get('otpToggle')?.valueChanges.subscribe((value) => {
-      if (value) {
-        this.password.setValue(null)
-      } else {
-        this.otp.setValue(null);
-      }
-    });
+  ngDoCheck(): void {
+    if (this.loginForm.invalid) {
+      this.setErrors();
+    } else {
+      console.log("FORM VALID");
+    }
   }
 
   onSubmit(): void {
@@ -77,7 +77,29 @@ export class LoginComponent implements OnInit {
       const userInput = this.loginForm.value.captchaInput;
       if (userInput === this.captchaText) {
         console.log('SUBMIT : CAPTCHA IS CORRECT')
-        this.fetchData()
+
+        this.dbService.getDb()
+          .subscribe({
+            next: data => {
+              this.db = data;
+              let user = this.db.users[0];
+              if (!this.otpToggle && this.loginForm.get('email')?.value == user.email && this.loginForm.get('password')?.value == user.password) {
+                console.log('SUBMIT : PASSWORD IS CORRECT')
+                alert('خوش آمدید')
+              } else if (this.otpToggle && this.loginForm.get('email')?.value == user.email && this.loginForm.get('otp')?.value == this.code) {
+                console.log('SUBMIT : OTP IS CORRECT')
+                alert('خوش آمدید')
+              } else {
+                console.log('SUBMIT : CREDENTIALS INCORRECT')
+              }
+            },
+            error(err) {
+              console.error('something wrong occurred: ' + err);
+            },
+            complete() {
+              console.log('done');
+            },
+          });
 
       } else {
         alert('CAPTCHA validation failed! Please try again.');
@@ -86,41 +108,12 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  fetchData() {
-    return fetch('/db.json')
-      .then(response => response.json())
-      .then(data => {
-        this.db = data;
-        let user = this.db.users[0];
-        let otp = this.db.otp[0];
-        if(!this.otpToggle && this.loginForm.get('email')?.value == user.email && this.loginForm.get('password')?.value == user.password) {
-          console.log('SUBMIT : PASSWORD IS CORRECT')
-        }else if(this.otpToggle && this.loginForm.get('email')?.value == user.email && this.loginForm.get('otp')?.value == otp.code){
-          console.log('SUBMIT : PASSWORD IS CORRECT')
-        } else {
-          console.log('SUBMIT : CREDENTIALS INCORRECT')
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-  }
-
-  ngDoCheck(): void {
-    if (this.loginForm.invalid) {
-      this.setErrors();
-      console.log("Form is invalid:", this.loginForm.errors , this.loginForm.value);
-    } else {
-      console.log("FORM VALID");
-    }
-  }
-
-  setErrors() {
-    let errors = this.loginForm.errors || {};
-    for (let field of this.fields) {
-      errors[field] = this.loginForm.get(field)?.errors;
-    }
-    this.loginForm.setErrors(errors);
+  getCode() {
+    this.dbService.getDb().subscribe(data => {
+      this.db = data;
+      this.code = this.db.otp[0].code;
+      alert(this.db.users[0].email + " : " + this.code);
+    });
   }
 
   generateNewCaptcha(): void {
@@ -128,10 +121,30 @@ export class LoginComponent implements OnInit {
     this.captchaImage = this.captchaService.generateCaptchaImage(this.captchaText);
   }
 
-  setBackgroundImage(): void {
+  private setErrors() {
+    let errors = this.loginForm.errors || {};
+    for (let field of this.fields) {
+      errors[field] = this.loginForm.get(field)?.errors;
+    }
+    this.loginForm.setErrors(errors);
+  }
+
+  private setBackgroundImage(): void {
     const backgrounds: string[] = ['/images/static/Slider-1.jpg', '/images/static/Slider-2.jpg', '/images/static/Slider-3.jpg', '/images/static/Slider-4.jpg',];
     const randomIndex: number = Math.floor(Math.random() * backgrounds.length);
     this.backgroundUrl = `url('${backgrounds[randomIndex]}')`;
     this.cdr.detectChanges();
+  }
+
+  private listenOnFormChange() {
+    this.loginForm.get('otpToggle')?.valueChanges.subscribe({
+      next: (value)=> {
+        if (value) {
+          this.password.setValue(null)
+        } else {
+          this.otp.setValue(null);
+        }
+      }
+    });
   }
 }
