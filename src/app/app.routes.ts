@@ -4,10 +4,11 @@ import {NgModule} from '@angular/core';
 import {AuthLayoutComponent} from './layouts/auth-layout/auth-layout.component';
 
 export const routes: Routes = [
+  {path: '', redirectTo: '/login', pathMatch: 'full'},
   {
     path: 'login',
-    component: AuthLayoutComponent ,
-    loadChildren : () => LoginRoutes.routes
+    component: AuthLayoutComponent,
+    loadChildren: () => LoginRoutes.routes
   },
 ];
 
@@ -15,4 +16,5 @@ export const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
