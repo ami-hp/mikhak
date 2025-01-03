@@ -32,7 +32,7 @@ export class AuthInputComponent implements OnInit {
   }
 
   get errors(){
-    if (this.name && this.control.invalid && (this.control.parent?.errors?.[this.name]) && (this.control.dirty || this.control.touched || this.isFormSubmitted)) {
+    if (this.name && this.control.invalid && (this.control.parent?.errors?.[this.name]) && (this.control.touched || this.isFormSubmitted)) {
       return this.toIterable(this.control.errors ?? {});
     }
     return [];

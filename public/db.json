@@ -3,6 +3,7 @@
     {
       "id": 1,
       "email" : "test@test.com",
+      "meli" : "0020202222",
       "password": "123456789"
     }
   ],

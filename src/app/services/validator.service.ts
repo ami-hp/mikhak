@@ -193,4 +193,12 @@ export class ValidatorService {
       return null;
     };
   }
+
+  setFormErrors(fb : FormGroup , fields : string[]) {
+    let errors : ValidationErrors = fb.errors || {};
+    for (let field of fields) {
+      errors[field] = fb.get(field)?.errors;
+    }
+    fb.setErrors(errors);
+  }
 }

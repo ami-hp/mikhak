@@ -16,7 +16,7 @@
 </div>
 
 <!--Errors-->
-@if (name && control.invalid && (control.parent?.errors?.[name]) && (control.dirty || control.touched || isFormSubmitted)) {
+@if (name && control.invalid && (control.parent?.errors?.[name]) && (control.touched || isFormSubmitted)) {
   <ul class="flex flex-col gap-2 border border-red-500 bg-red-300 rounded-xl text-red-600 p-3 list-disc list-inside mt-1 text-sm">
     @for (error of errors; track $index) {
       @if (getType(error.message) === 'string') {

@@ -1,110 +1,114 @@
-<div class="flex items-center justify-center h-screen bg-top bg-fixed bg-no-repeat"
-     [ngStyle]="{'background-image' : backgroundUrl}" >
-  <div class="bg-white p-5 bg-opacity-60 border-white border rounded-[40px] 4px 15px hsla(0,0%,100%,.72) shadow-[4px_4px_15px_hsla(0,0%,100%,.72)] w-11/12 max-w-[445px]">
-    <div class="flex justify-center mb-6">
-      <img class="w-1/2" src="/images/logo/yekparche.webp" alt="Mikhak logo">
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  @if (timeLeft > 0 && timeLeft < 120) {
+    <div class="mb-3 text-center">
+      زمان باقی مانده :
+      <span>{{ convertSecondsToMinutesSeconds(timeLeft) }}</span>
+      <span class="block mt-3">لطفا رمز عبور یکبار مصرف ارسال شده به ایمیل خود را در باکس زیر وارد نمایید. کاربر گرامی، ممکن است ایمیل حاوی رمز یکبار مصرف در پوشه spam ایمیل شما قرار گرفته باشد.</span>
     </div>
-    <div>
+  }
+  <fieldset class="grid grid-cols-1 gap-y-5">
 
+    <div class="flex justify-around">
+      <label>
+        <input type="radio" [formControl]="otpToggle" [value]="false">
+        کلمه عبور ثابت
+      </label>
+      <label>
+        <input type="radio" [formControl]="otpToggle" [value]="true">
+        رمز یکبار مصرف
+      </label>
+    </div>
 
+    @if (!otpSent) {
+      <auth-input
+        [control]="email"
+        name="email"
+        [isFormSubmitted]="isFormSubmitted"
+        type="text"
+        placeholder="نام کاربری (email)"
+        [dynamicStyle]="{'direction': 'ltr'}"
+      />
+    }
+    @if (otpToggle.value) {
 
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        @if(timeLeft > 0 && timeLeft < 120){
-          <div  class="mb-3 text-center">
-            زمان باقی مانده :
-            <span>{{ convertSecondsToMinutesSeconds(timeLeft) }}</span>
-          </div>
-        }
-        <fieldset class="grid grid-cols-1 gap-y-5">
+      <auth-input
+        [control]="meli"
+        name="meli"
+        [isFormSubmitted]="isFormSubmitted"
+        type="number"
+        placeholder="کد ملی"
+        [dynamicStyle]="{'direction': 'ltr'}"
+      />
+      @if (otpSent) {
+        <auth-input
+          [control]="otp"
+          name="otp"
+          [isFormSubmitted]="isFormSubmitted"
+          type="number"
+          placeholder="رمز عبور یکبار مصرف"
+          [dynamicStyle]="{'direction': 'ltr'}"
+          dynamicClass="col-span-2"
+        />
+      }
+    } @else {
+      <auth-input
+        [control]="password"
+        name="password"
+        [isFormSubmitted]="isFormSubmitted"
+        type="password"
+        placeholder="کلمه عبور (ترکیبی از حرف و عدد)"
+        [dynamicStyle]="{'direction': 'ltr'}"
+      />
+    }
 
-          <div class="flex justify-around">
-            <label>
-              <input type="radio" [formControl]="otpToggle" [value]="false">
-              کلمه عبور ثابت
-            </label>
-            <label>
-              <input type="radio" [formControl]="otpToggle" [value]="true">
-              رمز یکبار مصرف
-            </label>
-          </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 md:gap-x-2">
+      <div>
+        <auth-input
+          dynamicClass="w-full"
+          [control]="captchaInput"
+          name="captchaInput"
+          [isFormSubmitted]="isFormSubmitted"
+          type="text"
+          placeholder="کد امنیتی"
+          [required]="true"
+        />
+      </div>
 
-          <auth-input
-            [control]="email"
-            name="email"
-            [isFormSubmitted]="isFormSubmitted"
-            type="text"
-            placeholder="نام کاربری (email)"
-            [dynamicStyle]="{'direction': 'ltr'}"
-          />
-
-          @if(otpToggle.value){
-            <div class="grid grid-cols-3">
-              <div class="col-span-2">
-                <auth-input
-                  [control]="otp"
-                  name="otp"
-                  [isFormSubmitted]="isFormSubmitted"
-                  type="number"
-                  placeholder="رمز یکبار مصرف"
-                  [dynamicStyle]="{'direction': 'ltr'}"
-                  dynamicClass="col-span-2"
-                />
-              </div>
-              <button class="bg-[#bde0ff] rounded-full shadow-[2px_2px_7px_#666] p-3 font-bold text-gray-700 text-xs col-span-1" type="button" (click)="getCode()">دریافت کد</button>
-            </div>
-
-          } @else {
-            <auth-input
-              [control]="password"
-              name="password"
-              [isFormSubmitted]="isFormSubmitted"
-              type="password"
-              placeholder="کلمه عبور (ترکیبی از حرف و عدد)"
-              [dynamicStyle]="{'direction': 'ltr'}"
-            />
-          }
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 md:gap-x-2">
-            <div>
-              <auth-input
-                dynamicClass="w-full"
-                [control]="captchaInput"
-                name="captchaInput"
-                [isFormSubmitted]="isFormSubmitted"
-                type="text"
-                placeholder="کد امنیتی"
-                [required]="true"
-              />
-            </div>
-
-            <div class="flex items-center gap-x-2 justify-center">
-              <img [src]="captchaImage" alt="CAPTCHA"/>
-              <button (click)="generateNewCaptcha()" type="button">
-                <img class="max-w-5" ngSrc="/images/icons/reload.webp" alt="reload captcha" height="32" width="32">
-              </button>
-            </div>
-
-          </div>
-
-        </fieldset>
-
-        <div class="grid grid-cols-2 gap-x-3 mt-10">
-          <button class="bg-[#bde0ff] rounded-full shadow-[2px_2px_7px_#666] p-3 font-bold text-gray-700 text-xs" type="submit">ورود به سامانه</button>
-          <button class="bg-[#bde0ff] rounded-full shadow-[2px_2px_7px_#666] p-3 font-bold text-gray-700 text-xs" type="button">ورود با پست الکترونیک</button>
-        </div>
-
-        <div class="flex justify-center">
-          <button class="font-bold text-[#31345d] text-sm" type="button">کلمه عبور خود را فراموش کرده ام!</button>
-        </div>
-
-        <div class="flex justify-center">
-          <span class="mt-2 text-[#31345d] text-xs" >ویرایش : 1.18.0</span>
-        </div>
-
-      </form>
-
-
+      <div class="flex items-center gap-x-2 justify-center">
+        <img [src]="captchaImage" alt="CAPTCHA"/>
+        <button (click)="generateNewCaptcha()" type="button">
+          <img class="max-w-5" ngSrc="/images/icons/reload.webp" alt="reload captcha" height="32" width="32">
+        </button>
+      </div>
 
     </div>
+
+  </fieldset>
+
+  <div class="grid grid-cols-2 gap-x-3 mt-10">
+    <button class="bg-[#bde0ff] rounded-full shadow-[2px_2px_7px_#666] p-3 font-bold text-gray-700 text-xs"
+            [ngClass]="{'col-span-1' : otpToggle.value , 'col-span-2' : !otpToggle.value}"
+            type="submit">
+      ورود به سامانه
+    </button>
+    @if (otpToggle.value) {
+      <button
+        class="bg-[#bde0ff] rounded-full shadow-[2px_2px_7px_#666] p-3 font-bold text-gray-700 text-xs col-span-1"
+        type="button" (click)="sendCode($event)">
+        دریافت رمز عبور یکبار مصرف
+      </button>
+    }
   </div>
-</div>
+
+  <div class="flex justify-center">
+    <button class="font-bold text-[#31345d] text-sm" type="button">کلمه عبور خود را فراموش کرده ام!</button>
+  </div>
+
+  <div class="flex justify-center">
+    <span class="mt-2 text-[#31345d] text-xs">ویرایش : 1.18.0</span>
+  </div>
+
+</form>
+
+
+
