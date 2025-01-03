@@ -101,7 +101,7 @@ export class LoginComponent implements OnInit {
                 console.log('SUBMIT : OTP IS CORRECT')
                 alert('خوش آمدید')
               } else {
-                console.log('SUBMIT : CREDENTIALS INCORRECT')
+                console.error('SUBMIT : CREDENTIALS INCORRECT')
               }
             },
             error(err) {
@@ -137,6 +137,7 @@ export class LoginComponent implements OnInit {
   }
 
   startTimer() {
+    this.stopTimer();
     this.interval = (new UtilityService()).startTimer(this.interval, this, () => {
       alert('وقت تمام شد.')
     });
