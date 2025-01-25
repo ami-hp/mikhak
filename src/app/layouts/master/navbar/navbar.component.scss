@@ -1,0 +1,35 @@
+$headerImg1: '/images/static/header-logo-01.webp';
+$headerImg2: '/images/static/header-logo-02.webp';
+$headerImg3: '/images/static/header-logo-mini.webp';
+header {
+  background: url($headerImg1) no-repeat 100%, 0, url($headerImg2) repeat-x 100% 0;
+  background-size: contain, 8%, 384px;
+
+  nav {
+    .nav-li {
+      @apply px-3 text-sm;
+    }
+  }
+}
+
+@media (max-width: 1280px) {
+  header {
+    background: url($headerImg3) 50% no-repeat;
+    background-size: cover;
+  }
+}
+
+aside {
+  @apply text-white text-center;
+
+  .aside-li {
+    @apply py-6 text-xs border-b border-white/30;
+  }
+
+  &.slide-in {
+    transform: translateX(0)!important;
+  }
+}
+
+
+

@@ -1,0 +1,42 @@
+<header class="w-full flex items-center justify-around h-[106px] relative z-0">
+  <button type="button"
+          #mobileMenuBtn
+          (click)="handleMobileMenuClick()"
+          class="ham-menu w-10 h-8 absolute start-5 top-5 flex flex-col items-center justify-around xl:hidden">
+    <span class="bg-white w-full h-1 rounded pointer-events-none"></span>
+    <span class="bg-white w-full h-1 rounded pointer-events-none"></span>
+    <span class="bg-white w-full h-1 rounded pointer-events-none"></span>
+  </button>
+  <div>
+    <img src="./images/static/flower.webp" alt="" class="-ms-2 xl:ms-16 w-16 xl:w-20">
+  </div>
+  <nav class="w-full hidden xl:block -mt-4">
+    <ul class="flex divide-x divide-x-reverse justify-center items-center text-white">
+      <li class="nav-li"><a href="">معرفی سامانه</a></li>
+      <li class="nav-li"><a href="">تایید اسناد</a></li>
+      <li class="nav-li"><a href="">امور گذرنامه</a></li>
+      <li class="nav-li"><a href="">امور سجلات</a></li>
+      <li class="nav-li"><a href="">امور تحصیلی</a></li>
+      <li class="nav-li"><a href="">بررسی صحت مدارک</a></li>
+      <li class="nav-li"><a href="">دریافت راهنما</a></li>
+      <li class="nav-li"><a href="">تماس با ما</a></li>
+    </ul>
+  </nav>
+</header>
+
+<aside #mobileMenu
+       [class.slide-in.shadow-md]="asideState"
+       class="w-1/2 min-w-[18rem] h-[70dvh] max-h-max bg-[rgb(18,43,87)] fixed top-16 start rounded-e-3xl overflow-auto transition-all translate-x-full">
+
+  <ul class="w-full">
+    <li class="aside-li"><a href="">معرفی سامانه</a></li>
+    <li class="aside-li"><a href="">تایید اسناد</a></li>
+    <li class="aside-li"><a href="">امور گذرنامه</a></li>
+    <li class="aside-li"><a href="">امور سجلات</a></li>
+    <li class="aside-li"><a href="">امور تحصیلی</a></li>
+    <li class="aside-li"><a href="">بررسی صحت مدارک</a></li>
+    <li class="aside-li"><a href="">دریافت راهنما</a></li>
+    <li class="aside-li"><a href="">تماس با ما</a></li>
+  </ul>
+
+</aside>
