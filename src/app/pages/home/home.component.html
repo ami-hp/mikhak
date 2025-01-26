@@ -1,1 +1,24 @@
-<p>home works!</p>
+<main class="-mt-10 overflow-hidden">
+  <section id="home_intro" class="h-[575px] pt-10 flex flex-col items-center relative z-0">
+    <img class="max-w-full max-h-[280px] mt-8"
+         [src]="landingLogoImg" alt="mikhak-landing-logo"/>
+    <div class="flex flex-col items-center gap-y-5 mt-5">
+      <button class="home-btn" (click)="navigateToLogin()">ثبت نام / ورود به سامانه</button>
+      <button class="home-btn" (click)="navigateToLogin()">پسمان تردد</button>
+    </div>
+
+    <div class="flex justify-center w-full absolute bottom-8">
+      <img class="w-4"
+           [src]="scrollImg" alt="scroll down"/>
+    </div>
+  </section>
+  <div class="relative -mt-2 flex justify-center">
+    <img class="w-[calc(100%+13px)] max-w-none -mr-[3px] absolute bottom-0 z-0" [src]="notifImg" alt=""/>
+    <div class="w-full relative z-[1] flex">
+      <div class="px-[30px] py-[1%] flex-none">
+        <span class="border-e text-xs text-white pe-2">اطلاعیه های سازمان</span>
+      </div>
+      <div class="grow"></div>
+    </div>
+  </div>
+</main>

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,20 @@ import { Component } from '@angular/core';
   standalone: true,
   styleUrl: './home.component.scss'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
+  protected scrollImg : string = "./images/static/scrool-down.svg";
+  protected notifImg : string = "./images/static/shape-notif.webp";
+  protected landingLogoImg : string = "./images/static/mikhak-landing-logo.png";
+
+
+  constructor(private router: Router) {
+  }
+
+  ngOnInit(): void {
+  }
+
+  navigateToLogin() {
+    this.router.navigate(['/login']);
+  }
 }

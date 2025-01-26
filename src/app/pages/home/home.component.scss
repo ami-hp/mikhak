@@ -1,0 +1,11 @@
+#home_intro {
+  background: url('/images/static/background-main.webp') 50% center / cover no-repeat;
+
+  .home-btn {
+    @apply border border-white/50 rounded text-white py-2 text-xs w-[200px]
+  }
+}
+
+:root{
+  --padding-notif : 1% 30px;
+}

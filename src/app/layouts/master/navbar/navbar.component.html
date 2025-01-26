@@ -1,11 +1,11 @@
-<header class="w-full flex items-center justify-around h-[106px] relative z-0">
+<header class="w-full flex items-center justify-around h-[106px] relative z-[1]">
   <button type="button"
           #mobileMenuBtn
           (click)="handleMobileMenuClick()"
           class="ham-menu w-10 h-8 absolute start-5 top-5 flex flex-col items-center justify-around xl:hidden">
-    <span class="bg-white w-full h-1 rounded pointer-events-none"></span>
-    <span class="bg-white w-full h-1 rounded pointer-events-none"></span>
-    <span class="bg-white w-full h-1 rounded pointer-events-none"></span>
+    <span class="bg-white w-full h-1 rounded pointer-events-none transition-all"></span>
+    <span class="bg-white w-full h-1 rounded pointer-events-none transition-all"></span>
+    <span class="bg-white w-full h-1 rounded pointer-events-none transition-all"></span>
   </button>
   <div>
     <img src="./images/static/flower.webp" alt="" class="-ms-2 xl:ms-16 w-16 xl:w-20">
