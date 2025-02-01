@@ -1,11 +1,99 @@
+:root {
+  --padding-notif: 1% 30px;
+}
+
 #home_intro {
   background: url('/images/static/background-main.webp') 50% center / cover no-repeat;
 
   .home-btn {
-    @apply border border-white/50 rounded text-white py-2 text-xs w-[200px]
+    @apply border border-white/50 rounded text-white py-2 text-xs w-[200px];
   }
 }
 
-:root{
-  --padding-notif : 1% 30px;
+.tabs-wrapper {
+  ul.tab-buttons-wrapper{
+    li{
+      @apply cursor-pointer;
+      text-shadow: 0 0 5px rgba(255,255,255,0.8);
+      .placeholder {
+        &::before {
+          @apply w-[15px] h-[47px] inline-block bg-no-repeat bg-contain;
+          content: '';
+          background-image: url('/images/static/scrollUpDownBlue.svg');
+        }
+      }
+      * {
+        @apply pointer-events-none;
+      }
+    }
+  }
+  ul.tab-contents-wrapper {
+
+    li.tab-content-wrapper{
+      @apply w-full h-full flex flex-col items-center justify-between text-sm absolute start-0 top-0;
+      &.bg-introduction {
+        background: url('/images/static/tab-1.webp') 50% center / cover no-repeat;
+      }
+      &.bg-tak {
+        background: url('/images/static/tab-2.webp') 50% center / cover no-repeat;
+      }
+      &.bg-gozarnameh {
+        background: url('/images/static/tab-3.webp') 50% center / cover no-repeat;
+      }
+      &.bg-sejelat {
+        background: url('/images/static/tab-4.webp') 50% center / cover no-repeat;
+      }
+      &.bg-daneshjuee {
+        background: url('/images/static/tab-5.webp') 50% center / cover no-repeat;
+      }
+      .head {
+        @apply flex items-center justify-center gap-x-3 text-lg py-3;
+        img {
+          @apply h-[15px];
+          &:first-child {
+            @apply transform rotate-180;
+          }
+        }
+      }
+      .content{
+        direction: ltr;
+        *{ direction: rtl; }
+
+        @apply max-w-[80%] px-[5%] max-h-[70%] overflow-auto leading-8 font-bold text-justify;
+
+        &::-webkit-scrollbar {
+          width: 10px;
+        }
+
+        /* Track */
+        &::-webkit-scrollbar-track {
+          background: transparent;
+          box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+          border-radius: 10px;
+        }
+
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+          background: transparent;
+          box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+          border-radius: 10px;
+        }
+
+        /* Handle on hover */
+        &::-webkit-scrollbar-thumb:hover {
+          background: transparent;
+        }
+      }
+      .foot {
+        .tab-link {
+          @apply bg-mk-blue text-white px-3 font-bold rounded-xl border-2 border-solid border-[#b7dcfb] text-xs h-[40px] flex items-center justify-center;
+        }
+      }
+    }
+  }
+
+
 }
+
+
+

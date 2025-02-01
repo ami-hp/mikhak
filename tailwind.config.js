@@ -9,7 +9,7 @@ module.exports = {
         yekan: ['IRANYekan', 'sans-serif'],
       },
       colors: {
-        'uu' : "#aa00aa",
+        'mk-blue' : "#112c56",
       }
     },
   },

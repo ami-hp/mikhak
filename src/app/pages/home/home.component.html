@@ -1,4 +1,5 @@
-<main class="-mt-10 overflow-hidden">
+<main id="home" class="-mt-10 overflow-hidden">
+  <!--Intro SECTION Start-->
   <section id="home_intro" class="h-[575px] pt-10 flex flex-col items-center relative z-0">
     <img class="max-w-full max-h-[280px] mt-8"
          [src]="landingLogoImg" alt="mikhak-landing-logo"/>
@@ -13,7 +14,8 @@
     </div>
   </section>
   <div class="relative -mt-2 flex justify-center">
-    <img class="w-[calc(100%+13px)] max-w-none -mr-[3px] absolute bottom-0 z-0" [src]="notifImg" alt=""/>
+    <img class="w-[calc(100%+13px)] max-w-none -mr-[3px] absolute bottom-0 z-0"
+         [src]="notifImg" alt=""/>
     <div class="w-full relative z-[1] flex">
       <div class="px-[30px] py-[1%] flex-none">
         <span class="border-e text-xs text-white pe-2">اطلاعیه های سازمان</span>
@@ -21,4 +23,188 @@
       <div class="grow"></div>
     </div>
   </div>
+  <!--Intro SECTION END-->
+
+  <!--tabs START-->
+  <section class="tabs-wrapper w-full h-dvh min-h-[460px] relative text-mk-blue flex items-center">
+
+    <!--Tabs BUTTONS-->
+    <ul
+      class="tab-buttons-wrapper font-bold absolute z-[1] end-0 h-4/6 text-xs w-[112px]
+      flex flex-col justify-around items-center">
+      <li class="" data-tab="introduction">
+        <span [class.hidden]="isHomeTabOpen('introduction')">معرفی سامانه</span>
+        <span [class.hidden]="isHomeTabClosed('introduction')" class="placeholder"></span>
+      </li>
+      <li class="" data-tab="tak">
+        <span [class.hidden]="isHomeTabOpen('tak')">تائید اسناد</span>
+        <span [class.hidden]="isHomeTabClosed('tak')" class="placeholder"></span>
+      </li>
+      <li class="" data-tab="gozarnameh">
+        <span [class.hidden]="isHomeTabOpen('gozarnameh')">امور گذرنامه</span>
+        <span [class.hidden]="isHomeTabClosed('gozarnameh')" class="placeholder"></span>
+      </li>
+      <li class="" data-tab="sejelat">
+        <span [class.hidden]="isHomeTabOpen('sejelat')">امور سجلات</span>
+        <span [class.hidden]="isHomeTabClosed('sejelat')" class="placeholder"></span>
+      </li>
+      <li class="" data-tab="daneshjuee">
+        <span [class.hidden]="isHomeTabOpen('daneshjuee')">امور دانشجویی</span>
+        <span [class.hidden]="isHomeTabClosed('daneshjuee')" class="placeholder"></span>
+      </li>
+      <li class="" data-tab="op">
+        <span [class.hidden]="isHomeTabOpen('op')">آپوستیل</span>
+        <span [class.hidden]="isHomeTabClosed('op')" class="placeholder"></span>
+      </li>
+    </ul>
+
+    <!--TABs CONTENTS-->
+    <ul class="tab-contents-wrapper w-full h-full relative z-[0]">
+      <li [@tabContent]="isHomeTabOpen('introduction') ? 'active' : 'inactive'"
+          class="tab-content-wrapper bg-introduction">
+        <div class="head">
+          <img class=""
+               [src]="marginBlueImg" alt=""/>
+          <span>سامانه میخک چیست</span>
+          <img class=""
+               [src]="marginBlueImg" alt=""/>
+        </div>
+        <div class="content">
+          <p>
+            سامانه مدیریت یکپارچه خدمات کنسولی (میخک) بستری برای ارائه کلیه خدمات کنسولی به هموطنان در حوزه های
+            گوناگون
+            شامل امور گذرنامه، امور سجلی، امور حمایت های کنسولی و قضایی، تنظیم وکالتنامه، تایید اسناد و . . . می باشد
+            که
+            مراحل آن با تشکیل پرونده الکترونیک (پروفایل) آغاز و با تکمیل فرمهای خدمات مورد نظر و بارگذاری (آپلود)
+            تصویر
+            اسناد مربوطه و ارسال آن برای نمایندگی مورد نظر انجام میگردد.
+          </p>
+          <p>
+            بنا به ملاحظات امنیتی و رعایت حفاظت از اطلاعات حریم خصوصی مراجعین، بازخورد، اطلاع رسانی و انعکاس نتایج
+            درخواست فقط از طریق ارسال خودکار رایانامه (ایمیل) به ذینفع انجام شده و از این رو با ارسال درخواست تکمیل
+            شده،
+            هیچگونه اطلاعات و سوابقی در سامانه باقی نمانده و هرگونه اصلاح و یا تکمیل اطلاعات درخواست، صرفا از طریق
+            مراجعه به نمایندگی تعیین شده در خواست امکانپذیر میباشد.
+          </p>
+        </div>
+        <div class="foot mb-4 flex items-center gap-x-3">
+          <a class="tab-link" routerLink="/login">سوالات متداول</a>
+          <a class="tab-link" routerLink="/login">فیلم آموزشی ثبت نام سامانه</a>
+        </div>
+      </li>
+      <li [@tabContent]="isHomeTabOpen('tak') ? 'active' : 'inactive'"
+          class="tab-content-wrapper bg-tak">
+        <div class="head">
+          <img class=""
+               [src]="marginBlueImg" alt=""/>
+          <span>تائید اسناد</span>
+          <img class=""
+               [src]="marginBlueImg" alt=""/>
+        </div>
+        <div class="content">
+          <p>
+            استفاده از اسناد رسمی صادره از سوی مقامات رسمی یک کشور در کشور دیگر نیازمند تایید صحت آن از سوی سفارتخانه
+            های یک و یا هر دو کشور بوده و در این راستا هموطنان باید قبل از ارائه و استفاده از اسناد مختلف تحصیلی،
+            درمانی، تجاری، مالی و . . . صادره از مقامات رسمی کشورمان در کشور محل اقامت و یا بالعکس، اقدام به تایید این
+            اسناد در وزارت امورخارجه و یا نمایندگیهای جمهوری اسلامی ایران در خارج از کشور بنمایند.
+          </p>
+          <p>
+            از این رو هموطنان میتوانند با استفاده از خدمات بخش تایید اسناد سامانه میخک و تکمیل پرسشنامه ها، بارگذاری
+            اسناد مورد نیاز و ارسال آن به نمایندگی مورد نظر و نیز مراجعه حضوری (با در دست داشتن کدرهگیری دریافتی از
+            رایانامه ( ایمیل )) اسناد خود را جهت ارائه به کشور دیگر معتبر نمایند.
+          </p>
+        </div>
+        <div class="foot mb-4 flex items-center gap-x-3">
+          <a class="tab-link" routerLink="/login">سوالات متداول</a>
+          <a class="tab-link" routerLink="/login">دریافت راهنما</a>
+          <a class="tab-link" routerLink="/login">فیلم آموزشی ثبت نام سامانه</a>
+        </div>
+      </li>
+      <li [@tabContent]="isHomeTabOpen('gozarnameh') ? 'active' : 'inactive'"
+          class="tab-content-wrapper bg-gozarnameh">
+        <div class="head">
+          <img class=""
+               [src]="marginBlueImg" alt=""/>
+          <span>امور گذرنامه</span>
+          <img class=""
+               [src]="marginBlueImg" alt=""/>
+        </div>
+        <div class="content">
+          <p class="text-normal">گذرنامه مهمترین مدرک هویتی (شناسایی) رسمی است که دولت&zwnj;ها برای شهروندانشان صادر و
+            به آنها اجازه می دهند تا جهت تردد میان کشورهای دیگر استفاده نمایند. گذرنامه معرف هویت و تضمین&zwnj;کننده
+            امنیت و حقوق اتباع یک کشور در قلمرو دیگر کشورها است.</p>
+          <p class="text-normal">براساس قوانین جاری کشور، صدور گذرنامه جهت ایرانیان مقیم خارج از کشور به عهده وزارت
+            امورخارجه است که این کار توسط نمایندگی های جمهوری اسلامی ایران در خارج از کشور انجام می پذیرد.</p>
+          <p class="text-normal">درخواست و صدور گذرنامه، مبتنی بر یکی از دلایل زیر میباشد:</p>
+          <p class="text-normal">• پایان اعتبار گذرنامه (افرادی که از اعتبار گذرنامه آنان 6 ماه و یا کمتر باقی مانده
+            است)</p>
+          <p class="text-normal">• پرشدن صفحات گذرنامه</p>
+          <p class="text-normal">• تغییر نام و نام خانوادگی و یا تاریخ تولد به استناد شناسنامه ایرانی</p>
+          <p class="text-normal">• تغییر محل اقامت اتباع مقیم در گذرنامه</p>
+          <p class="text-normal">متقاضیان دریافت گذرنامه میبایست پس از تشکیل پرونده الکترونیک (پروفایل)، تکمیل فرم
+            درخواست صدورگذرنامه و بارگذاری تصویر اسناد مورد نیاز، ارسال آن به نمایندگی مورد نظر و نیز مراجعه حضوری (با
+            در دست داشتن کدرهگیری دریافتی از رایانامه) مراحل صدور و تحویل مدارک را انجام و گذرنامه خود را دریافت
+            نمایند.</p>
+        </div>
+        <div class="foot mb-4 flex items-center gap-x-3">
+          <a class="tab-link" routerLink="/login">سوالات متداول</a>
+          <a class="tab-link" routerLink="/login">فیلم آموزشی ثبت نام سامانه</a>
+        </div>
+      </li>
+      <li [@tabContent]="isHomeTabOpen('sejelat') ? 'active' : 'inactive'"
+          class="tab-content-wrapper bg-sejelat">
+        <div class="head">
+          <img class=""
+               [src]="marginBlueImg" alt=""/>
+          <span>امور سجلات</span>
+          <img class=""
+               [src]="marginBlueImg" alt=""/>
+        </div>
+        <div class="content">
+          <p class="text-normal">انجام كلیه امور ذیل به استناد ماده 1001 قانون مدنی و مواد 12، 22، 13، 31 و 43 قانون ثبت
+            احوال و بند (و) ماده 5 كنوانسیون وین در امور كنسولی و نیز بند 6 ماده 2 قانون وظایف وزارت امور خارجه، بعهده
+            نمایندگیهای جمهوری اسلامی ایران (وزارت امور خارجه_اداره سجلات و احوال شخصیه) می باشد.</p>
+          <p class="text-normal">مختصری از اموری كه به عهده اداره سجلات و احوال شخصیه می باشد و در سامانه میخک قرار دارد
+            به شرح زیر است:</p>
+          <p class="text-normal">• ثبت ولادت و صدور شناسنامه</p>
+          <p class="text-normal">• ثبت و صدور سند ازدواج و پروانه زناشویی</p>
+          <p class="text-normal">• ثبت و صدور سند طلاق</p>
+          <p class="text-normal">• ترجمه و تایید گواهی فوت، گواهی وفات</p>
+          <p class="text-normal">متقاضیان دریافت این خدمات نیز میبایست پس از تشکیل پرونده الکترونیک (پروفایل)، تکمیل
+            پرسشنامه درخواست و بارگذاری تصویر اسناد مورد نیاز و ارسال آن به نمایندگی مورد نظر و با مراجعه حضوری (با در
+            دست داشتن کدرهگیری دریافتی از رایانامه) مراحل درخواست را انجام و خدمت مورد نظر خود را دریافت نمایند.</p>
+        </div>
+        <div class="foot mb-4 flex items-center gap-x-3">
+          <a class="tab-link" routerLink="/login">سوالات متداول</a>
+          <a class="tab-link" routerLink="/login">فیلم آموزشی ثبت نام سامانه</a>
+        </div>
+      </li>
+      <li [@tabContent]="isHomeTabOpen('daneshjuee') ? 'active' : 'inactive'"
+          class="tab-content-wrapper bg-daneshjuee">
+        <div class="head">
+          <img class=""
+               [src]="marginBlueImg" alt=""/>
+          <span>امور دانشجویی</span>
+          <img class=""
+               [src]="marginBlueImg" alt=""/>
+        </div>
+        <div class="content">
+          <p class="text-normal">تمامی دانشجویان به منظور برخورداری از تسهیلات دانشجویی و نیز سایر اتباع ایرانی که مدارک
+            و گواهی های تحصیلی و آموزشی خارجی آنها برای ارائه به مقامات صلاحیت دار داخل کشور نیاز به تایید نمایندگی
+            جمهوری اسلامی ایران در خارج از کشور را دارند، باید ابتدا در این سامانه پرونده تحصیلی_ آموزشی تشکیل دهند، سپس
+            نسبت به بارگذاری مدارک و گواهی های درخواستی در سامانه در بخش تایید مدارک تحصیلی_ آموزشی اقدام نمایند.</p>
+          <p class="text-normal">مدارک و گواهی های آموزشی و تحصیلی اعم از دانش آموزی، دانشجویی، دانش آموختگی اتباع
+            ایرانی (شامل: هر گونه مدرک یا گواهی مبنی بر ثبت نام در مدارس خارجی، دوره تحصیلی، آموزشی، ریز نمرات، شهریه و
+            هزینه های تحصیلی، پیشرفت تحصیلی، دانشنامه و همچنین پایان دوره آموزشی صادره توسط مقام صلاحیت دار یک دانشگاه
+            یا موسسه آموزشی خارج از کشور) پس از اطمینان و احراز اصالت و تعلق به دارنده آن صرفا بصورت آنلاین در سامانه
+            میخک توسط مامور کنسولی در نمایندگی ها تایید می گردد.</p>
+        </div>
+        <div class="foot mb-4 flex items-center gap-x-3">
+          <a class="tab-link" routerLink="/login">سوالات متداول</a>
+          <a class="tab-link" routerLink="/login">فیلم آموزشی ثبت نام سامانه</a>
+        </div>
+      </li>
+    </ul>
+  </section>
+  <!--tabs END-->
 </main>
