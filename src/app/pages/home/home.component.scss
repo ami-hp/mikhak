@@ -59,7 +59,7 @@
         direction: ltr;
         *{ direction: rtl; }
 
-        @apply max-w-[80%] px-[5%] max-h-[70%] overflow-auto leading-8 font-bold text-justify;
+        @apply max-w-[80%] pe-1 ps-[15%] md:px-[5%] max-h-[70%] overflow-auto leading-8 font-bold text-justify;
 
         &::-webkit-scrollbar {
           width: 10px;

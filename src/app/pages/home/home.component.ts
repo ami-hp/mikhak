@@ -16,9 +16,11 @@ import {Subscription} from 'rxjs';
     trigger('tabContent', [
       state('active', style({
         opacity: 1,
+        zIndex: 0,
       })),
       state('inactive', style({
         opacity: 0,
+        zIndex: -10,
       })),
       transition('inactive => active', [
         animate('300ms ease-in')
