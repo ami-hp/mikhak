@@ -1,0 +1,20 @@
+footer{
+  .bg-footer{
+    background: url(/images/static/footer-patterns.svg) 0% 0% / cover no-repeat rgb(17, 44, 86);
+  }
+  .column{
+    @apply text-white px-8;
+    .title{
+      @apply block text-base mb-3 pb-3 px-8 border-b border-b-white w-full;
+    }
+    ul{
+      @apply text-sm flex flex-col gap-y-6 px-8;
+      li a:hover{
+        color: #0056b3;
+      }
+    }
+  }
+  .copyright{
+    background: #0c1b32 url(/images/static/footer-patterns.svg) no-repeat;
+  }
+}

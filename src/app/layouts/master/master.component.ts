@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {NavbarComponent} from './navbar/navbar.component';
+import {FooterComponent} from './footer/footer.component';
 
 @Component({
   selector: 'master-layout',
@@ -8,7 +9,8 @@ import {NavbarComponent} from './navbar/navbar.component';
   standalone: true,
   imports: [
     RouterOutlet,
-    NavbarComponent
+    NavbarComponent,
+    FooterComponent
   ],
   styleUrl: './master.component.scss'
 })
