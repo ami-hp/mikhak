@@ -1,0 +1,17 @@
+{
+  "users" : [
+    {
+      "id": 1,
+      "email" : "test@test.com",
+      "meli" : "0020202222",
+      "password": "123456789"
+    }
+  ],
+  "otp" : [
+    {
+      "id": 1,
+      "user_id": 1,
+      "code" : 123456
+    }
+  ]
+}
