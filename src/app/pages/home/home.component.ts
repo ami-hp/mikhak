@@ -1,7 +1,7 @@
 import {AfterContentInit, AfterViewInit, Component, ElementRef, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {TabService} from '../../services/tab.service';
-import { trigger, state, style, animate, transition } from '@angular/animations';
+import {trigger, state, style, animate, transition} from '@angular/animations';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -31,29 +31,32 @@ import {Subscription} from 'rxjs';
 })
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit, AfterContentInit {
 
-  protected scrollImg : string = "./images/static/scrool-down.svg";
-  protected notifImg : string = "./images/static/shape-notif.webp";
-  protected landingLogoImg : string = "./images/static/mikhak-landing-logo.png";
-  protected marginBlueImg : string = "./images/static/margin_blue.svg";
+  protected scrollImg: string = "./images/static/scrool-down.svg";
+  protected notifImg: string = "./images/static/shape-notif.webp";
+  protected landingLogoImg: string = "./images/static/mikhak-landing-logo.png";
+  protected marginBlueImg: string = "./images/static/margin_blue.svg";
   private fragmentSubscription?: Subscription;
   private currentFragment?: string | null;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private tabService: TabService,
+    protected tabService: TabService,
     private elRef: ElementRef,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.fragmentSubscription = this.route.fragment.subscribe(fragment => {
       this.currentFragment = fragment;
     });
+    this.tabService.element(this.elRef);
   }
 
-  ngAfterContentInit(){
-    this.tabService.setActiveTab(this.currentFragment ?? 'introduction');
-    this.tabService.subscribe(this.elRef);
+  ngAfterContentInit() {
+    this.tabService.setActiveTab(this.currentFragment ?? 'introduction' , 'group1');
+    let a = this.tabService.subscribe();
+    let b = this.tabService.listenTo('mouseover').subscribe('group2' , 'data-taber');
   }
 
   ngAfterViewInit() {}
@@ -62,14 +65,15 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit, AfterCon
     if (this.fragmentSubscription) {
       this.fragmentSubscription.unsubscribe();
     }
-    this.tabService.unsubscribe();
   }
 
-  isHomeTabOpen(tabName : string) : boolean {
-    return this.tabService.isOpen(tabName);
+
+  isHomeTabOpen(tabName: string): boolean {
+    return this.tabService.isOpen(tabName , 'group1');
   }
-  isHomeTabClosed(tabName : string) : boolean {
-    return !this.tabService.isOpen(tabName);
+
+  isHomeTabClosed(tabName: string): boolean {
+    return !this.tabService.isOpen(tabName , 'group1');
   }
 
   navigateToLogin() {
