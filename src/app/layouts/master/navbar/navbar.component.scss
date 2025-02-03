@@ -1,6 +1,8 @@
-$headerImg1: '/images/static/header-logo-01.webp';
-$headerImg2: '/images/static/header-logo-02.webp';
-$headerImg3: '/images/static/header-logo-mini.webp';
+@use "src/assets/scss/bootstrap" as *;
+
+$headerImg1: staticImg('header-logo-01.webp');
+$headerImg2: staticImg('header-logo-02.webp');
+$headerImg3: staticImg('header-logo-mini.webp');
 header {
   background: url($headerImg1) no-repeat 100%, 0, url($headerImg2) repeat-x 100% 0;
   background-size: contain, 8%, 384px;

@@ -1,9 +1,11 @@
+@use "src/assets/scss/bootstrap" as *;
+
 :root {
   --padding-notif: 1% 30px;
 }
 
 #home_intro {
-  background: url('/images/static/background-main.webp') 50% center / cover no-repeat;
+  background: url(staticImg('background-main.webp')) 50% center / cover no-repeat;
 
   .home-btn {
     @apply border border-white/50 rounded text-white py-2 text-xs w-[200px];
@@ -19,7 +21,7 @@
         &::before {
           @apply w-[15px] h-[47px] inline-block bg-no-repeat bg-contain;
           content: '';
-          background-image: url('/images/static/scrollUpDownBlue.svg');
+          background-image: url(staticImg('scrollUpDownBlue.svg'));
         }
       }
       * {
@@ -32,19 +34,19 @@
     li.tab-content-wrapper{
       @apply w-full h-full flex flex-col items-center justify-between text-sm absolute start-0 top-0;
       &.bg-introduction {
-        background: url('/images/static/tab-1.webp') 50% center / cover no-repeat;
+        background: url(staticImg('tab-1.webp')) 50% center / cover no-repeat;
       }
       &.bg-tak {
-        background: url('/images/static/tab-2.webp') 50% center / cover no-repeat;
+        background: url(staticImg('tab-2.webp')) 50% center / cover no-repeat;
       }
       &.bg-gozarnameh {
-        background: url('/images/static/tab-3.webp') 50% center / cover no-repeat;
+        background: url(staticImg('tab-3.webp')) 50% center / cover no-repeat;
       }
       &.bg-sejelat {
-        background: url('/images/static/tab-4.webp') 50% center / cover no-repeat;
+        background: url(staticImg('tab-4.webp')) 50% center / cover no-repeat;
       }
       &.bg-daneshjuee {
-        background: url('/images/static/tab-5.webp') 50% center / cover no-repeat;
+        background: url(staticImg('tab-5.webp')) 50% center / cover no-repeat;
       }
       .head {
         @apply flex items-center justify-center gap-x-3 text-lg py-3;

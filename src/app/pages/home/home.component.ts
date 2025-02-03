@@ -33,10 +33,10 @@ import {Subscription} from 'rxjs';
 })
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit, AfterContentInit {
 
-  protected scrollImg: string = "./images/static/scrool-down.svg";
-  protected notifImg: string = "./images/static/shape-notif.webp";
-  protected landingLogoImg: string = "./images/static/mikhak-landing-logo.png";
-  protected marginBlueImg: string = "./images/static/margin_blue.svg";
+  protected scrollImg: string = "assets/images/static/scrool-down.svg";
+  protected notifImg: string = "assets/images/static/shape-notif.webp";
+  protected landingLogoImg: string = "assets/images/static/mikhak-landing-logo.png";
+  protected marginBlueImg: string = "assets/images/static/margin_blue.svg";
   private fragmentSubscription?: Subscription;
   private currentFragment?: string | null;
 
@@ -57,8 +57,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit, AfterCon
 
   ngAfterContentInit() {
     this.tabService.setActiveTab(this.currentFragment ?? 'introduction' , 'group1');
-    let a = this.tabService.subscribe();
-    let b = this.tabService.listenTo('mouseover').subscribe('group2' , 'data-taber');
+    this.tabService.subscribe('group1');
   }
 
   ngAfterViewInit() {}

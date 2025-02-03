@@ -8,6 +8,6 @@ import {HttpClient} from '@angular/common/http';
 export class DbService {
   constructor(private http: HttpClient) {}
   getDb() :Observable<any> {
-    return this.http.get('/db.json');
+    return this.http.get('assets/db.json');
   }
 }

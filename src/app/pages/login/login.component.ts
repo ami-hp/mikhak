@@ -24,7 +24,6 @@ import {UtilityService} from '../../services/utility.service';
 export class LoginComponent implements OnInit {
   captchaText!: string;
   captchaImage!: string | null;
-  backgroundUrl: string = '';
   isFormSubmitted: boolean = false;
   db: any;
   otpSent: boolean = false;

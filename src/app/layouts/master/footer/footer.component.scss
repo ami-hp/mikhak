@@ -1,6 +1,10 @@
+@use "src/assets/scss/bootstrap" as *;
+
+$pattern : staticImg('footer-patterns.svg');
+
 footer{
   .bg-footer{
-    background: url(/images/static/footer-patterns.svg) 0% 0% / cover no-repeat rgb(17, 44, 86);
+    background: url($pattern) 0% 0% / cover no-repeat rgb(17, 44, 86);
   }
   .column{
     @apply text-white px-8;
@@ -15,6 +19,6 @@ footer{
     }
   }
   .copyright{
-    background: #0c1b32 url(/images/static/footer-patterns.svg) no-repeat;
+    background: #0c1b32 url($pattern) no-repeat;
   }
 }
